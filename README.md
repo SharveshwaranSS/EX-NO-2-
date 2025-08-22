@@ -34,49 +34,50 @@ STEP-5: Display the obtained cipher text.
 
 Program:
 ```
-#include <stdio.h>
-#include <string.h>
-#define SIZE 5
-char key[SIZE][SIZE] = 
+#include<stdio.h>
+#include<string.h>
+int main()
 {
-    {'M','O','N','A','R'}, {'C','H','Y','B','D'},
-    {'E','F','G','I','K'}, {'L','P','Q','S','T'},
-    {'U','V','W','X','Z'}
-};
+    unsigned int a[3][3]={{6,24,1},{13,16,10},{20,17,15}};
+    unsigned int b[3][3]={{8,5,10},{21,8,21},{21,12,8}};
+    int i,j, t=0;
+    unsigned int c[20],d[20];
+    char msg[20];
+    scanf("%s",msg);
+    printf("Enter plain text:%s\n",msg);
 
-void find(char ch, int *r, int *c) 
-{
-    for (int i = 0; i < SIZE*SIZE; i++)
-        if (key[i/SIZE][i%SIZE] == ch) { *r = i/SIZE; *c = i%SIZE; return; }
-}
-
-void playfair(char *in, char *out, int enc) 
-{
-    int r1, c1, r2, c2, s = enc ? 1 : -1;
-    for (int i = 0; in[i]; i += 2) 
+    for(i=0;i<strlen(msg);i++)
     {
-        find(in[i], &r1, &c1); find(in[i+1], &r2, &c2);
-        if (r1 == r2)
-            out[i] = key[r1][(c1 + s + SIZE) % SIZE],
-            out[i+1] = key[r2][(c2 + s + SIZE) % SIZE];
-        else if (c1 == c2)
-            out[i] = key[(r1 + s + SIZE) % SIZE][c1],
-            out[i+1] = key[(r2 + s + SIZE) % SIZE][c2];
-        else
-            out[i] = key[r1][c2], out[i+1] = key[r2][c1];
+        c[i]=msg[i]-65;
+        printf("%d ",c[i]);
     }
-    out[strlen(in)] = '\0';
+    for(i=0;i<3;i++)
+    {
+        t=0;
+        for(j=0;j<3;j++)
+        {
+            t=t+(a[i][j]*c[j]);
+        }
+        d[i]=t%26;
+    }
+    printf("\nEncrypted Cipher Text :");
+    for(i=0;i<3;i++)
+    printf(" %c",d[i]+65);
+    for(i=0;i<3;i++)
+    {
+        t=0;
+        for(j=0;j<3;j++)
+        {
+            t=t+(b[i][j]*d[j]);
+        }
+        c[i]=t%26;
+    }
+    printf("\nDecrypted Cipher Text :");
+    for(i=0;i<3;i++)
+    printf(" %c",c[i]+65);
+    return 0;
 }
 
-int main() 
-{
-    char encrypted[100], decrypted[100];
-    char text[] = "AGASH";
-    playfair(text, encrypted, 1);
-    printf("Encrypted: %s\n", encrypted);
-    playfair(encrypted, decrypted, 0);
-    printf("Decrypted: %s\n", decrypted);
-}
         
 ```
 
@@ -84,8 +85,9 @@ int main()
 
 Output:
 
+<img width="478" height="299" alt="image" src="https://github.com/user-attachments/assets/c0915dd2-4c41-46ae-8364-40476bd223c8" />
 
-<img width="500" height="252" alt="image" src="https://github.com/user-attachments/assets/57b2654e-197b-4f69-979d-d2f21b44fb47" />
+
 
 ## RESULT:
 
