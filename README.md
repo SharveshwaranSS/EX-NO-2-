@@ -1,8 +1,7 @@
 ## EX. NO:2 IMPLEMENTATION OF PLAYFAIR CIPHER
 
-### NAME :  IRFAN KHAN
-### REG NO: 212224230097
-
+### NAME :  SHARVESHWARAN SS
+### REG NO: 212224220096
 ## AIM:
 
 To write a C program to implement the Playfair Substitution technique.
