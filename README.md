@@ -33,58 +33,44 @@ STEP-5: Display the obtained cipher text.
 
 Program:
 ```
-#include<stdio.h>
-#include<string.h>
-int main()
-{
-    unsigned int a[3][3]={{6,24,1},{13,16,10},{20,17,15}};
-    unsigned int b[3][3]={{8,5,10},{21,8,21},{21,12,8}};
-    int i,j, t=0;
-    unsigned int c[20],d[20];
-    char msg[20];
-    scanf("%s",msg);
-    printf("Enter plain text:%s\n",msg);
+import numpy as np
+a = np.array([[6, 24, 1],
+              [13, 16, 10],
+              [20, 17, 15]])
 
-    for(i=0;i<strlen(msg);i++)
-    {
-        c[i]=msg[i]-65;
-        printf("%d ",c[i]);
-    }
-    for(i=0;i<3;i++)
-    {
-        t=0;
-        for(j=0;j<3;j++)
-        {
-            t=t+(a[i][j]*c[j]);
-        }
-        d[i]=t%26;
-    }
-    printf("\nEncrypted Cipher Text :");
-    for(i=0;i<3;i++)
-    printf(" %c",d[i]+65);
-    for(i=0;i<3;i++)
-    {
-        t=0;
-        for(j=0;j<3;j++)
-        {
-            t=t+(b[i][j]*d[j]);
-        }
-        c[i]=t%26;
-    }
-    printf("\nDecrypted Cipher Text :");
-    for(i=0;i<3;i++)
-    printf(" %c",c[i]+65);
-    return 0;
-}
+b = np.array([[8, 5, 10],
+              [21, 8, 21],
+              [21, 12, 8]])
 
-        
+msg = "SHARVESHWARANSS"
+
+print("Enter plain text:", msg)
+nums = [ord(ch) - 65 for ch in msg]
+cipher_nums = []
+for i in range(0, len(nums), 3):
+    block = nums[i:i+3]
+    if len(block) < 3:
+        block += [0] * (3 - len(block))  # pad with 'A' if needed
+    block = np.array(block)
+    enc = np.dot(a, block) % 26
+    cipher_nums.extend(enc)
+cipher_text = ''.join(chr(x + 65) for x in cipher_nums)
+print("Encrypted Cipher Text:", cipher_text)
+plain_nums = []
+for i in range(0, len(cipher_nums), 3):
+    block = cipher_nums[i:i+3]
+    block = np.array(block)
+    dec = np.dot(b, block) % 26
+    plain_nums.extend(dec)
+plain_text = ''.join(chr(x + 65) for x in plain_nums)
+print("Decrypted Cipher Text:", plain_text)
+
 ```
 
 
 
 Output:
-
-<img width="478" height="299" alt="image" src="https://github.com/user-attachments/assets/c0915dd2-4c41-46ae-8364-40476bd223c8" />
+<img width="1687" height="1022" alt="image" src="https://github.com/user-attachments/assets/90e41808-b3c8-48f4-9dc9-12803fa9b09b" />
 
 
 
